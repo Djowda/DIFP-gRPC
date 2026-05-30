@@ -39,8 +39,8 @@ jobs:
 
       - name: Create proto symlink for server
         run: |
-          mkdir -p server/src/main/proto
-          ln -sf "$(pwd)/proto/difp.proto" server/src/main/proto/difp.proto
+          mkdir -p server/java/examples/src/main/proto
+          ln -sf "$(pwd)/proto/difp.proto" server/java/examples/src/main/proto/difp.proto
 
       - name: Cache Gradle packages
         uses: actions/cache@v4
@@ -48,11 +48,14 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-server-${{ hashFiles('server/**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-server-${{ hashFiles('server/java/examples/**/*.gradle*') }}
+
+      - name: Make gradlew executable
+        run: chmod +x server/java/examples/gradlew
 
       - name: Build server
-        working-directory: server
-        run: ./gradlew build --no-daemon
+        working-directory: server/java/examples
+        run: ./gradlew installDist --no-daemon
 
   # ── 3. Build the Android example ─────────────────────────────────────────────
   android:
@@ -80,6 +83,9 @@ jobs:
             ~/.gradle/caches
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-android-${{ hashFiles('examples/android/**/*.gradle*') }}
+
+      - name: Make gradlew executable
+        run: chmod +x examples/android/gradlew
 
       - name: Build Android APK (debug)
         working-directory: examples/android
