@@ -9,7 +9,11 @@
 
 This repository contains the **gRPC transport implementation** of [DIFP v0.4](https://djowda.com/difp/) — the Djowda Interconnected Food Protocol. It is an official working preview, not a production release. Every placeholder is clearly marked for incremental replacement.
 
+
+
 ---
+
+<img src="src/screenshots/difp_grpc.png" alt="DIFP gRPC test client" width="360"/>
 
 ## Repository layout
 
